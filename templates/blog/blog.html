@@ -1,0 +1,84 @@
+ {% load static %}
+<html lang="ua">
+<head>
+	<title>Тенеріфе блог</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" media="all" />
+
+{#	<link rel="shortcut icon" href="css/images/favicon.ico" />#}
+
+</head>
+<body>
+<div class="shell">
+	<div class="border">
+
+		<div id="navigation">
+			<ul>
+			    <li><a href="/" class="active">Головна сторінка</a></li>
+			    <li><a href="/admin">Адміністратор</a></li>
+                <li><a href="https://www.instagram.com/julia.ttv/" target="_blank">
+                    <img src="{% static 'img/instagram.jpg' %}" alt="instagram" width="40"></a></li>
+                <li><a href="https://www.facebook.com/julia.titovchenko/" target="_blank">
+                    <img src="{% static 'img/facebook.png' %}" alt="instagram" width="41"></a></li>
+                <li><a href="mailto:julia.titovchenko@gmail.com" target="_blank">
+                    <img src="{% static 'img/gmail.png' %}" alt="instagram" width="39"></a></li>
+                <li><a href="https://pin.it/25XkhtB" target="_blank">
+                    <img src="{% static 'img/pinterest.jpg' %}" alt="instagram" width="41"></a></li>
+			</ul>
+		</div>
+
+		<div id="main">
+			<div id="content" class="left">
+				
+				<div class="projects">
+					<h2>Тенеріфе. Туристичний блог</h2>
+                <br>
+                <br>
+					{% for post in post_list %}
+					<div class="item">
+						<div class="image left">
+							<img src="{{ post.image.url }}" alt="{{ post.title }}" width="170px"/>
+						</div>
+						<div class="text left">
+                            <h4><a href="{{ post.id }}">{{ post.title }}</a></h4>
+                            <br>
+                            <p>{{ post.description|truncatechars:300 }}</p>
+                            <br>
+							<time>{{ post.date|date:'d.m.Y'}} </time>
+                            <br>
+						</div>
+						<div class="cl">&nbsp;</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+{#        <div class="pagination">#}
+{#    <span class="step-links">#}
+{#        {% if page_obj.has_previous %}#}
+{#            <a href="?page=1">&laquo; first</a>#}
+{#            <a href="?page={{ page_obj.previous_page_number }}">previous</a>#}
+{#        {% endif %}#}
+{##}
+{#        <span class="current">#}
+{#            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.#}
+{#        </span>#}
+{##}
+{#        {% if page_obj.has_next %}#}
+{#            <a href="?page={{ page_obj.next_page_number }}">next</a>#}
+{#            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>#}
+{#        {% endif %}#}
+{#    </span>#}
+{#        </div>#}
+
+			<div class="cl">&nbsp;</div>
+		</div>
+
+
+	</div>
+	
+	<div id="footer">
+		<p class="copy right">Julia Titovchenko &copy; 2023 </p>
+	</div>
+</div>
+</body>
+</html>

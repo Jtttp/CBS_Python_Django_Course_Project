@@ -1,0 +1,93 @@
+{% load static %}
+<html lang="ua">
+<head>
+	<title>Блог про Тенеріфе</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" media="all" />
+
+{#	<link rel="shortcut icon" href="media/image/2023/teide.jpg" />#}
+
+</head>
+<body>
+<div class="shell">
+	<div class="border">
+
+		<div id="navigation">
+			<ul>
+			    <li><a href="/" class="active">Головна сторінка</a></li>
+			    <li><a href="/admin">Адміністратор</a></li>
+			    
+			</ul>
+		</div>
+
+		<div id="main">
+			<div id="content" class="left">
+				
+				<div class="projects">
+					<h3>{{ post.title }}</h3>
+                    <p style="text-align:center;">
+                       <img src="{{ post.image.url }}" alt="{{ post.title }}" width='50%'/>
+                    </p>
+					<div class="item">
+						<div class="text left"><p> {{ post.description }}"</p>
+                            <br>
+							<p>Автор: {{ post.author }} </p>
+                            <time>{{ post.date|date:'d.m.Y'}} </time>
+						</div>
+						<div class="cl">&nbsp;
+                        </div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="cl">&nbsp;</div>
+        </div>
+        <div>
+            <br>
+            <p> Вподобали: {{ post.likes_set.all.count }}</p>
+            <br>
+            <a href="{% url 'add_likes' post.id %}">
+                <img src="{% static 'img/like.png' %}" alt="like" width="25"></a>
+            <a href="{% url 'add_dislikes' post.id %}">
+                <img src="{% static 'img/not_like.png' %}" alt="dislike" width="25"></a>
+        </div>
+		<div class="form-comment">
+            <h3>Залишити коментар</h3>
+            <div>
+                <form action="{% url 'add_comments' post.id %}" method="post">
+                    {% csrf_token %}
+                    <div>
+                        <label>Коментар</label>
+                        <label>
+                            <textarea name="text_comments"></textarea>
+                        </label>
+                        </div>
+                    <div>
+                        <label>Ваше ім'я *</label>
+                        <input type="text" name="name">
+                    </div>
+                    <div>
+                        <label>Ваш email *</label>
+                        <input type="email" name="email">
+                    </div>
+                    <input type="submit"  name = "submit" value = "Надіслати">
+                </form>
+            </div>
+        </div>
+        <div>
+            {% for comment in post.comments_set.all %}
+                <div class="view-comment">
+                <h4>{{ comment.name }}</h4>
+                <p>
+                    {{ comment.text_comments }}
+                </p>
+                </div>
+            {% endfor %}
+        </div>
+	</div>
+	
+	<div id="footer">
+		<p class="copy right">Julia Titovchenko &copy; 2023 </p>
+	</div>
+</div>
+</body>
