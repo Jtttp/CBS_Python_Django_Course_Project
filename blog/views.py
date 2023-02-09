@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic.base import View
+from django.views.generic.list import ListView
 from django.core.paginator import Paginator
 from .models import Post, Likes
 from .forms import CommentsForm
@@ -8,20 +9,20 @@ from .forms import CommentsForm
 class PostView(View):
     """This class publish posts"""
 
-    def get(self, request):
-        posts = Post.objects.all()
-        return render(request, 'blog/blog.html', {'post_list': posts})
-
     # def get(self, request):
     #     posts = Post.objects.all()
-    #     paginator = Paginator(posts, 3)
-    #     page_number = request.GET.get('page')
-    #     page_obj = paginator.get_page(page_number)
-    #     return render(request, 'blog/blog.html', {'post_list': posts, 'page_obj': page_obj})
+    #     return render(request, 'blog/blog.html', {'post_list': posts})
+
+    def get(self, request):
+        posts = Post.objects.all()
+        paginator = Paginator(posts, 3)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        return render(request, 'blog/blog.html', {'post_list': posts, 'page_obj': page_obj, 'paginator': paginator})
 
 
 class PostDetail(View):
-    """Separate page for each post"""
+    """Separate page for each posts"""
 
     def get(self, request, pk):
         post = Post.objects.get(id=pk)
